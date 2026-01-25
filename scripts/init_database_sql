@@ -1,0 +1,43 @@
+/*
+=================================================
+Create Database and Schema
+=================================================
+
+Script purpose:
+  This script creates a new data warehouse data based called "DataWarehouse  with 
+  three schema: bronze silver, and gold following a medallion architecture. 
+
+WARNING:
+  This script first checks if there is a database called "DataWarehouse" first,
+  and then drops this database. Ensure there is no sensitive data in this file before running
+  and make sure there are backup files. 
+*/
+
+-- Create the 'Data Warehouse' database 
+
+USE master;
+GO
+
+-- Check for existing 'DataWarehouse' database
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse')
+BEGIN
+	ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+	DROP DATABASE DataWarehouse;
+END;
+GO
+
+-- Recreate the DWH
+CREATE DATABASE DataWarehouse;
+GO
+
+USE DataWarehouse;
+GO
+
+-- Create the schema for the DWH
+
+CREATE SCHEMA bronze;
+GO
+CREATE SCHEMA silver;
+GO
+CREATE SCHEMA gold;
+GO
